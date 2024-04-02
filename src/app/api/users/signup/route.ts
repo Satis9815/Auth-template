@@ -3,10 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 import bcrypt from "bcryptjs";
 import { sendEmail } from "@/helpers/mailer";
+connectDb();
 
 export async function POST(request: NextRequest) {
     try {
-        const reqBody = request.json();
+        const reqBody =await request.json();
         const {username,email,password} = reqBody;
         console.log(reqBody);
 
@@ -17,11 +18,11 @@ export async function POST(request: NextRequest) {
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt);
-      const newUser =   new User({
-            username,
-            email,
-            password:hashedPassword
-        });
+        const newUser =   new User({
+                username,
+                email,
+                password:hashedPassword
+            });
         const savedUser = await newUser.save();
 
         // send Email 
