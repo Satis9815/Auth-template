@@ -10,7 +10,7 @@ const ProfilePage = () => {
 
   const getUserDetails = async () => {
     const response = await axios.get('/api/users/me');
-    console.log(response);
+
     setUserDetails(response?.data);
   };
   const logout = async () => {
@@ -21,11 +21,10 @@ const ProfilePage = () => {
   useEffect(() => {
     getUserDetails();
   }, []);
-  console.log(userDetails);
+
   return (
     <div className="h-screen flex justify-center items-center">
       <form className="lg:w-1/3 md:w-1/2 bg-white flex flex-col  w-full md:py-8 mt-8 md:mt-0 px-4 md:px-0 lg:px-0 xl:px-0">
-        <Toaster />
         <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">
           Your Details
         </h2>

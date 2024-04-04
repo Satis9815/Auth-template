@@ -20,7 +20,6 @@ const VerifyUser = () => {
         toast.error('Token Not Found');
       }
     } catch (error:any) {
-      console.log(error);
       toast.error(error?.response?.data?.error);
     }
   };
@@ -38,7 +37,6 @@ const VerifyUser = () => {
 
   return (
     <div className="px-4 md:px-0 lg:px-0 xl:px-0 h-screen justify-center flex items-center flex-col">
-      <Toaster />
       <h2>
         {token ? (
           <>
