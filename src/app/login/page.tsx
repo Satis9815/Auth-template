@@ -29,6 +29,7 @@ const LoginPage = () => {
       toast.success('Logged In');
       setDisable(false);
       setLoading(false);
+      router.push("/profile");
     } catch (error: any) {
       toast.error(error?.message);
       console.log(error);
@@ -50,7 +51,7 @@ const LoginPage = () => {
         <Toaster/>
         <form
           onSubmit={submitForm}
-          className="lg:w-1/3 md:w-1/2 bg-white flex flex-col  w-full md:py-8 mt-8 md:mt-0"
+          className="lg:w-1/3 md:w-1/2 bg-white flex flex-col  w-full md:py-8 mt-8 md:mt-0 px-4 "
         >
           <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">
             Login Now
@@ -93,8 +94,8 @@ const LoginPage = () => {
           >
             Login
           </button>
-          <p className="text-xs text-gray-500 mt-3">
-            You don't  have an accout?<Link href={'/signup'}>Signup</Link>
+          <p className="text-sm text-gray-500 mt-3">
+            You don't  have an accout?<Link href={'/signup'} className='hover:text-indigo-500'>Signup</Link>
           </p>
         </form>
       </div>

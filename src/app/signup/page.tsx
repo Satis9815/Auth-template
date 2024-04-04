@@ -15,7 +15,7 @@ const SignupPage = () => {
   });
 
 
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(true);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -25,7 +25,7 @@ const SignupPage = () => {
       setDisable(true);
       setLoading(true);
       const response = await axios.post('/api/users/signup', user);
-      toast.success('Signup Successfully,Please verify your email');
+      toast.success('Signup Successfully,Please check your email');
       setDisable(false);
       setLoading(false);
       router.push("/login");
@@ -36,13 +36,14 @@ const SignupPage = () => {
   };
   useEffect(() => {
     if (
-      user.username.length < 0 ||
-      user.email.length < 0 ||
-      user.password.length < 0
+      user.username.length > 0 &&
+      user.email.length > 0 &&
+      user.password.length > 0
     ) {
-      setDisable(true);
-    } else {
       setDisable(false);
+      console.log("false");
+    } else {
+      setDisable(true);
     }
   }, [user]);
   return (
@@ -51,13 +52,13 @@ const SignupPage = () => {
       <Toaster/>
         <form
           onSubmit={submitForm}
-          className="lg:w-1/3 md:w-1/2 bg-white flex flex-col  w-full md:py-8 mt-8 md:mt-0"
+          className="lg:w-1/3 md:w-1/2 bg-white flex flex-col  w-full md:py-8 mt-8 md:mt-0 px-4 "
         >
           <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">
             Resgister Now
           </h2>
-          <p className="leading-relaxed mb-5 text-gray-600">
-            Post-ironic portland shabby chic echo park, banjo fashion axe
+          <p className="leading-relaxed mb-5 text-gray-600 text-sm">
+            This is the simple authentication system made by <span className='text-indigo-500' >Er. Satis Kumar Chaudhary</span>
           </p>
           <div className="relative mb-4">
             <label htmlFor="name" className="leading-7 text-sm text-gray-600">
@@ -102,12 +103,12 @@ const SignupPage = () => {
           <button
             type="submit"
             disabled={disable}
-            className={`text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ${disable && "bg-indigo-300"}`}
+            className={`text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ${disable && "bg-indigo-300 cursor-not-allowed hover:bg-indigo-300"}`}
           >
             Submit
           </button>
-          <p className="text-xs text-gray-500 mt-3">
-            Already have an accout?<Link href={'/login'}>Login</Link>
+          <p className="text-sm text-gray-500 mt-3">
+            Already have an accout?<Link href={'/login'} className='hover:text-indigo-500'>Login</Link>
           </p>
         </form>
       </div>
