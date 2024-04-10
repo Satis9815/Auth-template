@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 
 const ProfilePage = () => {
   const [userDetails, setUserDetails] = useState<any>(null);
+  // const [username,setUsername] = useState('');
+  // const [email,setEmail] = useState("");
   const router = useRouter();
 
   const getUserDetails = async () => {
@@ -21,6 +23,21 @@ const ProfilePage = () => {
   useEffect(() => {
     getUserDetails();
   }, []);
+
+
+  const update = async()=>{
+    await axios.post('/api/users/update',{username:userDetails?.user?.username,email:userDetails?.user?.email});
+    toast.success('User Updated Successfully');
+
+  }
+
+  const handleChange =(e:any)=>{
+    setUserDetails({...userDetails,user: {
+      ...userDetails?.user,
+      [e.target.name]: e.target.value,
+
+    }})
+  }
 
   return (
     <div className="h-screen flex justify-center items-center">
@@ -43,6 +60,7 @@ const ProfilePage = () => {
             id="username"
             name="username"
             value={userDetails?.user?.username}
+            onChange={handleChange}
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           />
         </div>
@@ -55,6 +73,7 @@ const ProfilePage = () => {
             id="email"
             name="email"
             value={userDetails?.user?.email}
+            onChange={handleChange}
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           />
           <button
@@ -63,6 +82,20 @@ const ProfilePage = () => {
             className={`text-white bg-indigo-500 mt-5 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg`}
           >
             Logout
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push("/")}
+            className={`text-white ml-2 bg-pink-500 mt-5 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded text-lg`}
+          >
+            Go to Home 
+          </button>
+                   <button
+            type="button"
+            onClick={update}
+            className={`text-white ml-2 bg-green-500 mt-5 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg`}
+          >
+            Update Profile
           </button>
         </div>
       </form>
